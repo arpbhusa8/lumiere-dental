@@ -45,3 +45,8 @@ next-env.d.ts
 /playwright-report/
 /playwright/.cache/
 /blob-report/
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key

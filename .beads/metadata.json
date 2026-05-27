@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "yantra_dentist",
+  "project_id": "4718bc48-da69-42d5-85ce-9965c6ff1af1"
+}
