@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { format, addDays, isSameDay, startOfDay } from "date-fns";
@@ -228,14 +229,14 @@ export function BookingFlow({
 
 function StepType({ value, onChange }: { value: State["patientType"]; onChange: (v: State["patientType"]) => void }) {
   const opts = [
-    { v: "new" as const, label: "I'm new to Lumière", desc: "First visit. We'll begin with a sixty-minute consultation." },
+    { v: "new" as const, label: "I'm new to Om Sai", desc: "First visit — we'll begin with a thorough consultation." },
     { v: "returning" as const, label: "I'm a returning patient", desc: "Welcome back. Reserve with your usual clinician." },
   ];
   return (
     <div>
       <div className="eyebrow text-[var(--brass)] mb-3">Step 1</div>
       <h2 className="font-serif text-3xl md:text-4xl tracking-tight">Tell us about yourself.</h2>
-      <p className="mt-3 text-muted-foreground text-sm">A short orientation, then we'll match you to a clinician.</p>
+      <p className="mt-3 text-muted-foreground text-sm">A short orientation, then we&apos;ll match you to a clinician.</p>
       <div className="mt-10 grid sm:grid-cols-2 gap-4">
         {opts.map((o) => {
           const active = value === o.v;
@@ -294,7 +295,7 @@ function StepTreatment({
                 <div className="text-xs text-muted-foreground mt-1">{s.duration_minutes} min</div>
               </div>
               <div className="text-xs text-muted-foreground whitespace-nowrap">
-                {s.price_from ? `From £${s.price_from.toLocaleString()}` : "POA"}
+                {s.price_from ? `From NPR ${s.price_from.toLocaleString()}` : "Estimate at consult"}
               </div>
             </button>
           );
@@ -456,7 +457,7 @@ function StepReview({ state, service, practitioners }: { state: State; service: 
       <div className="eyebrow text-[var(--brass)] mb-3">Step 5</div>
       <h2 className="font-serif text-3xl md:text-4xl tracking-tight">A final glance.</h2>
       <div className="mt-8 divide-y divide-border/60">
-        <Row label="Patient" value={state.patientType === "new" ? "New to Lumière" : "Returning patient"} />
+        <Row label="Patient" value={state.patientType === "new" ? "New to Om Sai" : "Returning patient"} />
         <Row label="Treatment" value={service?.name ?? "—"} sub={service ? `${service.duration_minutes} min` : ""} />
         <Row label="Clinician" value={prac?.name ?? "No preference"} />
         <Row
@@ -470,7 +471,7 @@ function StepReview({ state, service, practitioners }: { state: State; service: 
         {state.notes && <Row label="Notes" value={state.notes} />}
       </div>
       <p className="mt-8 text-xs text-muted-foreground leading-relaxed">
-        By reserving you agree to our cancellation policy — at least 48 hours notice, otherwise a £50 deposit is forfeit.
+        By reserving you agree to our cancellation policy — please give at least 48 hours notice if you need to reschedule.
       </p>
     </div>
   );
@@ -501,14 +502,18 @@ function Confirmation({ id, state, service }: { id: string; state: State; servic
       </motion.div>
       <h2 className="mt-8 font-serif text-4xl md:text-5xl tracking-tight">Reservation received.</h2>
       <p className="mt-6 text-muted-foreground leading-relaxed">
-        Thank you, {state.name.split(" ")[0]}. We have your request for{" "}
+        Thanks, {state.name.split(" ")[0]}. We have your request for{" "}
         <span className="text-foreground">{service?.name}</span>
         {state.date ? ` on ${format(state.date, "EEEE d MMMM")} at ${state.time}` : ""}.
-        Our concierge will telephone within one business hour to confirm.
+        Dr. Ajit&apos;s team will confirm your appointment by phone or WhatsApp shortly.
+      </p>
+      <p className="mt-4 text-xs text-muted-foreground">
+        Call <a href="tel:+97725538312" className="underline">025-538312</a> or WhatsApp{" "}
+        <a href="https://wa.me/9779852057909" className="underline">9779852057909</a>.
       </p>
       <p className="mt-6 text-xs text-muted-foreground">Reference · {id.slice(0, 8).toUpperCase()}</p>
       <Button asChild className="mt-10 rounded-full h-11 px-6">
-        <a href="/">Return home</a>
+        <Link href="/">Return home</Link>
       </Button>
     </div>
   );

@@ -1,141 +1,152 @@
 # Roadmap — What To Build Next
 
-_Last reviewed: 2026-05-27_
+_Last reviewed: 2026-05-28_
 
-Prioritised so the highest-value, lowest-effort items are at the top. Each item is small enough to ship in a single session.
+Prioritised so blockers to a credible public launch sit at the top. The Om Sai rebrand is shipped; what gates the real "go live" is **proof, not pixels** — owner-supplied evidence that backs the four messaging pillars (Academic Authority, Transparent Pricing, Patient-First Comfort, Local Specialist).
 
 ---
 
-## P0 — Required before real launch
+## P0 — Owner deliverables (proof-gap unblocking)
 
-1. **Wire `metadataBase` to env**
-   `src/app/layout.tsx` currently hardcodes `https://lumiere-dental.vercel.app`. Change to `new URL(process.env.NEXT_PUBLIC_SITE_URL!)`.
+These come from Dr. Ajit / the clinic team. Nothing about the site is invented; until each lands, the corresponding section ships as a neutral placeholder.
 
-2. **Add Supabase Auth redirect URL**
+1. **Approve published implant price band**
+   Owner signs off on the NPR range for single implant + crown to publish on `/pricing-guide`. Draft band held in `.brief/SOURCE.md` — do **not** publish until written approval.
+
+2. **Secure Nobel Medical College lecturer screenshot**
+   Faculty-page screenshot or appointment letter, served as the visual proof anchor for the "Academic Authority" pillar on `/` and `/implants`.
+
+3. **Collect 3–5 patient testimonials with written consent**
+   Quotes + first name + treatment + consent on file. Repopulates the empty `testimonials` table (cleared in migration `004`) and unhides the homepage testimonial section.
+
+4. **Commission Dr. Ajit clinical photo**
+   Editorial-lit portrait (chair-side or environmental), warm white balance ~5200K, 4:5 ratio. Replaces the SVG `PortraitTile` / `PractitionerPortrait` placeholders.
+
+5. **Confirm clinic equipment + implant systems used**
+   CBCT? digital X-ray? intra-oral camera? Which implant system(s)? Unlocks specific copy on `/implants` and FAQ #4; until then `/implants` says "Digital X-rays today; CBCT planned."
+
+6. **Confirm operating hours**
+   Current `/contact` shows placeholder Sun–Fri 9am–6pm, Sat closed. Owner-confirm before public launch.
+
+---
+
+## P0 — Engineering (required before real launch)
+
+7. **Wire `metadataBase` to env**
+   `src/app/layout.tsx` currently hardcodes the old `lumiere-dental.vercel.app` URL. Change to `new URL(process.env.NEXT_PUBLIC_SITE_URL!)` so previews and the custom domain resolve OG/Twitter assets correctly.
+
+8. **Apply migration `004_om_sai_reseed.sql` to the remote Supabase project**
+   Mirrors the local reseed (Dr. Ajit as sole practitioner + implant/periodontal services + cleared testimonials) onto `ptearftwlrdifjnirimd`. Confirm with `list_migrations` after apply.
+
+9. **Add Supabase Auth redirect URL for production**
    In Supabase dashboard → **Auth → URL Configuration → Redirect URLs**, add:
    - `https://lumiere-dental-blond.vercel.app/auth/callback`
-   - Any custom domain once attached.
+   - Any custom domain once attached (see #10).
 
-3. **Real photography**
-   Replace SVG placeholders with real images (`next/image`):
-   - Hero photo (4:5, warm-light interior or close-up botanical/instrument)
-   - Practitioner headshots (4 portraits, editorial lighting)
-   - About page secondary image
-   - Contact studio interior
-   Drop into `public/images/` and update `Hero`, `TeamGrid`, `PortraitTile`, `PractitionerPortrait`, `AboutPage`.
-
-4. **Custom domain**
-   Attach `lumiere.dental` or `lumiere-dental.com` via Vercel → Domains. Update `NEXT_PUBLIC_SITE_URL` + Supabase redirect URLs after.
-
-5. **Brand rename (if needed)**
-   "Lumière Dental Studio" is placeholder. Search-replace across `src/app/layout.tsx`, `README.md`, `STATE.md`, `DESIGN.md`, site nav/footer, and meta tags.
+10. **Custom domain**
+    Attach an Om Sai-branded domain (e.g. `omsaidental.com.np` or `omsaidental.com`) via Vercel → Domains. Update `NEXT_PUBLIC_SITE_URL` + Supabase redirect URLs after.
 
 ---
 
 ## P1 — High-leverage features
 
-6. **Email + SMS confirmation on booking**
-   Wire Resend (or Supabase Edge Function) into `create_appointment` to:
-   - Email the patient a confirmation + `.ics` calendar attachment.
-   - Email/SMS the concierge inbox so the studio can call to confirm.
-   - Reuse the Vercel Marketplace Resend integration.
+11. **Email + .ics confirmation on booking (Resend)**
+    Wire Resend (via the Vercel Marketplace integration) into the `create_appointment` flow to:
+    - Email the patient a confirmation with `.ics` calendar attachment.
+    - Email the clinic inbox + WhatsApp link so staff can call to confirm.
+    - Include the post-op hotline number (Patient-First Comfort pillar).
 
-7. **Stripe deposit hold**
-   £50 refundable deposit in the booking flow (research brief recommendation):
-   - Add Stripe Payment Intent before final confirm step.
-   - Store `stripe_payment_intent_id` on `appointments`.
-   - Refund/forfeit logic in cancellation route.
+12. **Admin dashboard for the clinic**
+    `/admin` route (gated by Supabase RLS role or service-key middleware):
+    - Calendar view of upcoming appointments.
+    - Confirm / cancel / no-show actions (writes status).
+    - Edit `services` + `practitioners` inline.
+    - Capture and toggle testimonial publish state once consent is on file.
 
-8. **Admin dashboard for the studio**
-   `/admin` route (gated by Supabase RLS role or service-key middleware):
-   - Calendar view of upcoming appointments.
-   - Confirm / cancel / no-show actions (writes status).
-   - Edit `services` + `practitioners` inline.
+13. **Real availability**
+    Replace the static `TIME_SLOTS` in `booking-flow.tsx` with practitioner-specific availability:
+    - New table `practitioner_availability(practitioner_id, weekday, start_time, end_time)`.
+    - Seed Dr. Ajit's schedule once #6 confirms hours.
+    - Exclude already-booked slots from the date/time step.
 
-9. **Real availability**
-   Replace the static `TIME_SLOTS` in `booking-flow.tsx` with practitioner-specific availability:
-   - New table `practitioner_availability(practitioner_id, weekday, start_time, end_time)`.
-   - Exclude already-booked slots from the date/time step.
+14. **Before/after gallery (post-consent only)**
+    `/results` with a draggable compare-slider for implant + periodontal cases. New `case_studies` table with `before_image`, `after_image`, `treatment_id`, `patient_quote`, `consent_signed_at`. Nothing renders without a signed consent record.
 
-10. **Before/after gallery**
-    `/portfolio` (or `/results`) with a draggable compare-slider (research brief recommendation). Add `case_studies` table with `before_image`, `after_image`, `treatment_id`, `patient_quote`.
+15. **Bilingual Nepali editor pass on top 3 pages**
+    `[NEPALI-TRANSLATION-TBD]` placeholders converted to verified Nepali copy on `/`, `/implants`, `/pricing-guide` (highest commercial intent). Translator-of-record review, no auto-translation.
 
 ---
 
 ## P2 — Polish & content
 
-11. **Real treatment detail pages**
-    `/services/[slug]` — long-form pages with photography, FAQ, before/after, related treatments. Generate from `services` rows.
+16. **Real treatment detail pages**
+    `/services/[slug]` — long-form pages with photography, FAQ, before/after, related treatments. Generate from `services` rows. Prioritise implant + periodontal slugs.
 
-12. **Press strip with real wordmarks**
-    Replace text fallbacks in `PressStrip` with greyscale SVG logos at low opacity. Source legitimately or drop the strip until coverage is real.
+17. **30-day content calendar published to `/journal`**
+    Per `.brief/SOURCE.md`, four pillar posts on Tuesdays — implant cost, procedure walkthrough, gum disease guide, signs of gum disease. Internal-link each to its pillar page + one adjacent pillar.
 
-13. **Cookie banner + privacy/terms pages**
-    GDPR-friendly. Use `cookies-next` + simple consent state.
+18. **Credentials proof strip with real assets**
+    Once #2 lands, swap text fallbacks for greyscale screenshots / logos at low opacity (Nobel Medical College, MDS registration, professional bodies). No deal/discount badges — banned word adjacency.
 
-14. **Sustainability micro-section**
-    Pick one ethos (sustainability / longevity / biomimetic) and thread it through home + about. Research brief recommended this for differentiation.
+19. **Cookie banner + privacy / terms pages**
+    Privacy notice covering Supabase storage, WhatsApp opt-in, and image consent for testimonials/before-after. Plain Nepali + English.
 
-15. **Membership / concierge plan card**
-    Homepage CTA-block alternative or new `/membership` route. Monthly retainer copy + Stripe Checkout.
+20. **Post-op hotline micro-section**
+    Dedicated card/CTA threading the Patient-First Comfort pillar through `/` and `/implants`. Surface the WhatsApp number prominently and explain what the hotline covers.
 
-16. **Video hero loop**
-    8–12 second silent muted loop of studio interior — replace the SVG hero illustration on viewports `>= md`. Use `next/video` or a plain `<video>` with poster fallback.
+21. **Membership / annual check-up plan**
+    Optional CTA-block or `/membership` route once the clinic decides pricing. Monthly or annual retainer covering hygiene + periodontal review.
 
-17. **Virtual tour video on /about**
-    Same pattern, inside the "ritual" section.
+22. **Video hero loop**
+    8–12 second silent muted loop of the Dharan-2 clinic interior — replace the SVG hero illustration on viewports `>= md`. Use `next/video` or plain `<video>` with poster fallback.
 
 ---
 
 ## P3 — Engineering hygiene
 
-18. **CI on GitHub Actions**
+23. **CI on GitHub Actions**
     - `pnpm install --frozen-lockfile`
     - `pnpm build`
     - `pnpm test:e2e` against a preview deploy URL.
     Block merges to `main` on failure.
 
-19. **Sentry or Vercel Analytics**
-    Already-installed Vercel project; add `@vercel/analytics` + `@vercel/speed-insights` and Sentry SDK for error reporting.
+24. **Sentry or Vercel Analytics**
+    Add `@vercel/analytics` + `@vercel/speed-insights` and Sentry SDK for error reporting.
 
-20. **Storybook for design system**
-    Document `Reveal`, `Stagger`, `WordStagger`, buttons, cards. Helps maintain consistency as new pages are added.
+25. **Storybook for design system**
+    Document `Reveal`, `Stagger`, `WordStagger`, buttons, cards.
 
-21. **Lighthouse + accessibility audit**
+26. **Lighthouse + accessibility audit**
     Target ≥95 on Lighthouse Performance / Accessibility / SEO / Best Practices on the homepage. Run `pnpm exec playwright test` with `@axe-core/playwright` once added.
 
-22. **Image optimisation**
-    Once real photos land, ensure all `next/image` `priority` flags are set for above-fold images and sizes are tuned.
-
-23. **i18n (optional)**
-    If the studio caters to international clients, add `next-intl` with `en-GB` + `ar` (Marylebone draws Gulf patients).
+27. **Image optimisation**
+    Once real photos land, set `next/image` `priority` flags for above-fold images and tune `sizes`.
 
 ---
 
 ## P4 — Stretch ideas
 
-24. **Patient portal expansion**
+28. **Patient portal expansion**
     - View treatment plan (PDF render server-side).
-    - Pay invoices.
+    - Pay invoices / deposits.
     - Re-book aftercare.
-    - Message the studio (Supabase Realtime).
+    - Message the clinic (Supabase Realtime).
 
-25. **Editorial blog `/journal`**
-    Long-form posts on procedures, recovery, oral wellness. Sanity or just MDX in-repo.
+29. **AI consultation triage**
+    "Describe your concern" → LLM (claude-haiku) → suggested specialist focus (implant vs. periodontal) + booking pre-filled. Must always defer to Dr. Ajit's chair-side assessment; no diagnosis claims.
 
-26. **AI consultation triage**
-    "Describe your concern" → LLM (claude-haiku-4-5) → suggested treatments + practitioner match. Booking pre-filled.
-
-27. **3D smile simulator**
-    Upload front-facing photo, ML overlay of veneer/whitening result. Premium differentiator.
+30. **Second clinic location (Kathmandu)**
+    The locations module already accepts N entries — when/if a Kathmandu branch opens, add a second card without re-architecting nav or `/contact`.
 
 ---
 
 ## Where to start
 
-If shipping for a real client this week, go in order:
-1. Items 1–5 (P0) — required to launch.
-2. Item 6 (P1) — confirmation emails are the single biggest patient-experience gap.
-3. Item 8 (P1) — the studio cannot operate the site without admin tooling.
+If shipping a credible public launch this week:
+
+1. **Items 1–6 (owner deliverables)** — without these, the site cannot fully unblock the homepage testimonials, `/pricing-guide`, and the lecturer proof anchor. Push the owner; do not invent.
+2. **Items 7–10 (engineering P0)** — the technical bar for a real launch.
+3. **Item 11 (Resend confirmations)** — biggest patient-experience gap after the proof gaps close.
+4. **Item 12 (admin dashboard)** — the clinic cannot operate the booking funnel without it.
 
 Everything else can roll out post-launch.

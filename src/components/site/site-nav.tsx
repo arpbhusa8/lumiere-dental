@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { href: "/services", label: "Treatments" },
   { href: "/team", label: "Team" },
-  { href: "/about", label: "Studio" },
+  { href: "/about", label: "About" },
   { href: "/contact", label: "Visit" },
 ];
 
@@ -19,6 +19,12 @@ export function SiteNav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [lastPath, setLastPath] = useState(pathname);
+
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -26,8 +32,6 @@ export function SiteNav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => setOpen(false), [pathname]);
 
   return (
     <header
@@ -40,9 +44,9 @@ export function SiteNav() {
     >
       <div className="container-editorial flex h-20 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-serif text-xl tracking-tight">
-          <span className="text-foreground">Lumière</span>
+          <span className="text-foreground">Om Sai Dental</span>
           <span className="hidden sm:inline text-muted-foreground/80 text-xs eyebrow self-end pb-1.5">
-            Dental Studio
+            Implant Center
           </span>
         </Link>
 

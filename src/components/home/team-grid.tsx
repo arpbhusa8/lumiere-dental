@@ -2,27 +2,42 @@ import Link from "next/link";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import type { Practitioner } from "@/lib/types";
 
+const FALLBACK_PRACTITIONER = {
+  id: "ajit-yadav",
+  slug: "ajit-yadav",
+  name: "Dr. Ajit Yadav",
+  credentials: "MDS · Consultant Periodontist & Implantologist · Lecturer, Nobel Medical College",
+};
+
 export function TeamGrid({ practitioners }: { practitioners: Practitioner[] }) {
+  const list =
+    practitioners.length > 0
+      ? practitioners.slice(0, 1)
+      : [FALLBACK_PRACTITIONER];
+
   return (
     <section className="py-28 md:py-36">
       <div className="container-editorial">
         <div className="flex flex-col md:flex-row justify-between gap-8 mb-16">
           <Reveal>
-            <div className="eyebrow mb-6">The studio</div>
-            <h2 className="display text-[clamp(2.25rem,5vw,4.5rem)] max-w-xl">
-              Practitioners worth <span className="italic text-[var(--brass)]">the journey</span>.
+            <div className="eyebrow mb-6">Meet the specialist</div>
+            <h2 className="display text-[clamp(2.25rem,5vw,4.5rem)] max-w-2xl">
+              Treatment led by a <span className="italic text-[var(--brass)]">consultant periodontist</span>.
             </h2>
           </Reveal>
         </div>
 
-        <Stagger className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {practitioners.map((p) => (
+        <Stagger className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-4xl">
+          {list.map((p) => (
             <StaggerItem key={p.id}>
               <Link href={`/team#${p.slug}`} className="group block">
+                {/* proof-gap: photo */}
                 <PractitionerPortrait name={p.name} />
                 <div className="mt-5">
                   <h3 className="font-serif text-xl tracking-tight">{p.name}</h3>
-                  <p className="mt-1.5 text-xs text-muted-foreground">{p.credentials}</p>
+                  <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">
+                    {p.credentials}
+                  </p>
                 </div>
               </Link>
             </StaggerItem>

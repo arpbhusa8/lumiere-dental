@@ -6,12 +6,12 @@ test.describe("Booking flow", () => {
     await expect(page.getByRole("heading", { name: /Reserve your/i })).toBeVisible();
 
     // Step 1: patient type
-    await page.getByRole("button", { name: /new to Lumière/i }).click();
+    await page.getByRole("button", { name: /new to Om Sai/i }).click();
     await page.getByRole("button", { name: /^Continue/i }).click();
 
     // Step 2: pick first service
     await expect(page.getByRole("heading", { name: /choose a treatment/i })).toBeVisible();
-    await page.getByRole("button", { name: /hygiene & cleaning/i }).click();
+    await page.getByRole("button").filter({ hasText: /Implant|Periodontal|Routine|Examination/i }).first().click();
     await page.getByRole("button", { name: /^Continue/i }).click();
 
     // Step 3: date and time

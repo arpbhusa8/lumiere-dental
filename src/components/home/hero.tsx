@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import { WordStagger } from "@/components/motion/word-stagger";
 import { Button } from "@/components/ui/button";
 
@@ -22,29 +22,30 @@ export function Hero() {
             className="eyebrow mb-8 flex items-center gap-4"
           >
             <span className="inline-block h-px w-12 bg-[var(--brass)]" />
-            Marylebone · By appointment
+            Dharan-2, Desi Line · By appointment
           </motion.div>
 
           <WordStagger
             as="h1"
-            text="Dentistry, refined."
-            className="display text-[clamp(3rem,9vw,8rem)] tracking-[-0.035em] leading-[0.9]"
+            text="Dr. Ajit Yadav,"
+            className="display text-[clamp(2.5rem,7.5vw,6.5rem)] tracking-[-0.035em] leading-[0.95]"
           />
           <WordStagger
             as="h1"
-            text="Quietly extraordinary."
+            text="Expert Implantologist in Dharan."
             delay={0.35}
-            className="display text-[clamp(3rem,9vw,8rem)] tracking-[-0.035em] leading-[0.9] italic text-[var(--brass)]"
+            className="display text-[clamp(2.5rem,7.5vw,6.5rem)] tracking-[-0.035em] leading-[0.95] italic text-[var(--brass)]"
           />
 
           <motion.p
             initial={{ opacity: 0, y: reduce ? 0 : 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.8 }}
-            className="mt-10 max-w-md text-base md:text-lg text-muted-foreground leading-relaxed"
+            className="mt-10 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed"
           >
-            A boutique studio for cosmetic, restorative and preventive care.
-            One clinician, one patient, one unhurried hour.
+            Specialized dental implant and periodontal care led by a consultant
+            periodontist and lecturer, offering personalized treatment plans and
+            easy appointment booking.
           </motion.p>
 
           <motion.div
@@ -54,16 +55,19 @@ export function Hero() {
             className="mt-12 flex flex-wrap items-center gap-6"
           >
             <Button asChild size="lg" className="rounded-full h-12 px-7 text-sm tracking-wide">
-              <Link href="/booking">
+              <Link href="tel:+97725538312">
                 Book a consultation
                 <ArrowRight className="ml-1 size-4" />
               </Link>
             </Button>
             <Link
-              href="/services"
-              className="text-sm tracking-wide underline-offset-8 underline decoration-[var(--brass)]/60 hover:decoration-foreground transition-colors"
+              href="https://wa.me/9779852057909"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm tracking-wide underline-offset-8 underline decoration-[var(--brass)]/60 hover:decoration-foreground transition-colors"
             >
-              Explore treatments
+              <MessageCircle className="size-4" />
+              WhatsApp Dr. Ajit
             </Link>
           </motion.div>
         </div>
@@ -75,6 +79,7 @@ export function Hero() {
             transition={{ duration: reduce ? 0 : 1.4, ease: EASE, delay: 0.3 }}
             className="aspect-[4/5] rounded-2xl overflow-hidden relative bg-[var(--forest)]"
           >
+            {/* proof-gap: hero clinic/portrait photo */}
             <HeroIllustration />
           </motion.div>
 
@@ -82,31 +87,19 @@ export function Hero() {
             initial={{ opacity: 0, y: reduce ? 0 : 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: 1.2 }}
-            className="absolute -left-6 bottom-10 bg-card border border-border rounded-xl px-5 py-4 shadow-sm max-w-[220px] hidden md:block"
+            className="absolute -left-6 bottom-10 bg-card border border-border rounded-xl px-5 py-4 shadow-sm max-w-[240px] hidden md:block"
           >
-            <div className="flex items-center gap-0.5 text-[var(--brass)]">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} />
-              ))}
-            </div>
-            <p className="text-xs mt-2 text-muted-foreground leading-relaxed">
-              &ldquo;Quietly the best dental experience in London.&rdquo;
+            <div className="eyebrow text-[var(--brass)] mb-2">Specialist credentials</div>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              MDS, Periodontology. Consultant Periodontist &amp; Implantologist.
+              Lecturer, Nobel Medical College.
             </p>
-            <p className="text-[10px] mt-2 eyebrow">Tatler</p>
           </motion.div>
         </div>
       </div>
 
       <BackgroundOrnament />
     </section>
-  );
-}
-
-function Star() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="size-3">
-      <path d="M12 2l2.9 7.1 7.1.6-5.3 4.6 1.6 7L12 17.7 5.7 21.3l1.6-7L2 9.7l7.1-.6z" />
-    </svg>
   );
 }
 

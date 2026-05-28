@@ -1,8 +1,12 @@
-# Lumière Dental Studio
+# Om Sai Dental Implant Center
 
-A premium boutique dental clinic website. Editorial, calm, clinical-luxe — built with Next.js 16, Tailwind 4, shadcn/ui, Motion.dev, and Supabase.
+Specialist implant and periodontal clinic in Dharan, Nepal — led by Dr. Ajit Yadav, MDS (Periodontology), Consultant Periodontist, Implantologist, and lecturer at Nobel Medical College, Biratnagar. Editorial, calm, clinically authoritative — built with Next.js 16, Tailwind 4, shadcn/ui, Motion.dev, and Supabase.
 
-**Live:** https://lumiere-dental-blond.vercel.app
+**Live:** https://lumiere-dental-blond.vercel.app *(custom Om Sai domain pending — see `NEXT.md`)*
+
+**Phone:** `025-538312` · **WhatsApp:** `9852057909` · **Address:** Dharan-2, Desi Line, Sunsari district, Nepal
+
+Brand source of truth: [`.brief/SOURCE.md`](./.brief/SOURCE.md) — copy, banned words, and proof gaps live there.
 
 ## Stack
 
@@ -26,12 +30,16 @@ See [`DESIGN.md`](./DESIGN.md) for the full design system — palette, typograph
 
 | Path | Purpose |
 | --- | --- |
-| `/` | Hero, press strip, philosophy, services, team, testimonial, CTA |
+| `/` | Hero (Dr. Ajit, expert implantologist in Dharan), credentials, 3 value props, services, team, testimonial, FAQ, CTA |
 | `/services` | Categorised treatment menu |
+| `/implants` | Pillar — Dental Implant Specialist in Dharan (Dr. Ajit Yadav, MDS) |
+| `/pricing-guide` | Pillar — Dental Implant Cost Guide (transparent ranges, owner-approved only) |
+| `/gum-disease` | Pillar — Gum Disease Treatment in Dharan, expert periodontal care |
+| `/journal` | Editorial articles — pricing, procedures, gum-health guides |
 | `/team` | Editorial portraits + credentials |
-| `/about` | Studio philosophy + ritual narrative |
-| `/contact` | Address, hours, hand-drawn map |
-| `/booking` | 5-step reservation flow (Type → Treatment → Date/Time → Details → Review) |
+| `/about` | Clinic philosophy + MDS-led care narrative |
+| `/contact` | Address (Dharan-2, Desi Line, Sunsari), hours, map, phone, WhatsApp |
+| `/booking` | 5-step reservation flow (Visit type → Focus → Date/Time → Details → Review) |
 | `/login` `/signup` | Magic-link sign-in |
 | `/dashboard` | Patient appointments + history (auth-gated) |
 | `/auth/callback` | Supabase OTP exchange |
@@ -63,11 +71,12 @@ Required:
 ### 3. Supabase schema
 
 The schema is committed as Supabase migrations in [`supabase/migrations/`](./supabase/migrations/):
-- `001_lumiere_dental_schema.sql` — tables, RLS, seed data
+- `001_lumiere_dental_schema.sql` — tables, RLS, original seed data (schema kept; data superseded by `004`)
 - `002_fix_appointment_grants.sql` — anon/authenticated grants
 - `003_create_appointment_rpc.sql` — SECURITY DEFINER booking RPC
+- `004_om_sai_reseed.sql` — Om Sai rebrand reseed: replaces practitioner roster with Dr. Ajit Yadav (MDS), swaps service catalogue to implant + periodontal focus, clears testimonials until consented quotes arrive. Schema itself is unchanged.
 
-Apply them via the Supabase CLI, SQL editor, or MCP, in numerical order.
+Apply them via the Supabase CLI, SQL editor, or MCP, in numerical order — `004` must run after `001` for the reseed to take effect.
 
 ### 4. Run
 
@@ -80,11 +89,11 @@ pnpm test:e2e     # Playwright suite (boots a dev server)
 
 ## Database schema
 
-- `services` — treatment catalogue (8 seeded)
-- `practitioners` — clinician roster (4 seeded)
+- `services` — treatment catalogue (reseeded in `004` to implant + periodontal focus)
+- `practitioners` — clinician roster (reseeded in `004` to Dr. Ajit Yadav, MDS, as sole practitioner)
 - `appointments` — booking records (status: pending / confirmed / completed / cancelled / no_show)
 - `patient_profiles` — auth.users-linked patient data
-- `testimonials` — featured patient quotes
+- `testimonials` — featured patient quotes (empty post-`004` until consented quotes are collected — see `NEXT.md`)
 
 RLS is enforced on all tables. Anonymous bookings are accepted via the `create_appointment(...)` RPC (SECURITY DEFINER), which sidesteps the role-level INSERT block.
 
@@ -108,7 +117,7 @@ PLAYWRIGHT_BASE_URL=https://your-deploy pnpm exec playwright test --project=chro
 
 ## Deployment
 
-Linked to Vercel project `yantra-s-projects/lumiere-dental`.
+Linked to Vercel project `yantra-s-projects/lumiere-dental` (project ID retained from initial scaffold; Om Sai-branded custom domain pending — see `NEXT.md`).
 
 ```bash
 vercel deploy --prod

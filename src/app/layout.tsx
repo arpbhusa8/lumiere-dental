@@ -3,6 +3,7 @@ import { Fraunces, Inter, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
+import { PostHogProvider } from "@/components/analytics/posthog-provider";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -26,16 +27,23 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Lumière Dental Studio — Boutique Dental Care",
-    template: "%s · Lumière Dental Studio",
+    default: "Om Sai Dental Implant Center — Expert Implant Care in Dharan",
+    template: "%s · Om Sai Dental Implant Center",
   },
   description:
-    "A quiet, considered studio for cosmetic, restorative, and preventive dentistry. By appointment only.",
-  metadataBase: new URL("https://lumiere-dental.vercel.app"),
+    "Visit Om Sai Dental Implant Center for expert implant and periodontal care in Dharan, led by Consultant Periodontist Dr. Ajit Yadav. Call or WhatsApp to book.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   openGraph: {
-    title: "Lumière Dental Studio",
-    description: "Boutique dentistry. By appointment only.",
+    title: "Om Sai Dental Implant Center – Expert Implant Care in Dharan",
+    description:
+      "Get personalized dental implant and periodontal treatment from a trusted consultant periodontist. Easy phone or WhatsApp booking.",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Om Sai Dental Implant Center – Expert Implant Care in Dharan",
+    description:
+      "Get personalized dental implant and periodontal treatment from a trusted consultant periodontist. Easy phone or WhatsApp booking.",
   },
 };
 
@@ -48,10 +56,12 @@ export default function RootLayout({
       className={`${fraunces.variable} ${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <SiteNav />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
-        <Toaster position="bottom-right" />
+        <PostHogProvider>
+          <SiteNav />
+          <main className="flex-1">{children}</main>
+          <SiteFooter />
+          <Toaster position="bottom-right" />
+        </PostHogProvider>
       </body>
     </html>
   );

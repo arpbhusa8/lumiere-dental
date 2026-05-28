@@ -54,7 +54,7 @@
 }
 
 :root {
-  /* Lumière palette — warm ivory + sage */
+  /* Om Sai palette — warm ivory + sage */
   --ivory: oklch(0.957 0.014 85);
   --bone: oklch(0.978 0.008 90);
   --forest: oklch(0.301 0.025 145);

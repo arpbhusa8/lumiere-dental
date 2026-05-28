@@ -5,16 +5,6 @@ import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 
 export const metadata = { title: "Visit" };
 
-const HOURS = [
-  ["Monday", "9:00 — 19:00"],
-  ["Tuesday", "9:00 — 19:00"],
-  ["Wednesday", "9:00 — 19:00"],
-  ["Thursday", "9:00 — 20:00"],
-  ["Friday", "9:00 — 18:00"],
-  ["Saturday", "10:00 — 16:00"],
-  ["Sunday", "Closed"],
-];
-
 export default function ContactPage() {
   return (
     <div className="pt-36 pb-24">
@@ -22,7 +12,7 @@ export default function ContactPage() {
         <Reveal>
           <div className="eyebrow mb-6">Visit</div>
           <h1 className="display text-[clamp(2.5rem,7vw,6rem)] tracking-[-0.03em] max-w-4xl">
-            A quiet corner of <span className="italic text-[var(--brass)]">Marylebone</span>.
+            A consultant clinic in <span className="italic text-[var(--brass)]">Dharan-2</span>.
           </h1>
         </Reveal>
       </section>
@@ -30,27 +20,35 @@ export default function ContactPage() {
       <section className="container-editorial mt-20 grid md:grid-cols-12 gap-12">
         <div className="md:col-span-5 space-y-10">
           <Reveal>
-            <div className="eyebrow mb-3 text-[var(--brass)]">Studio</div>
+            <div className="eyebrow mb-3 text-[var(--brass)]">Clinic</div>
             <p className="font-serif text-2xl leading-tight">
-              42 Marylebone High Street<br />London W1U 5HE
+              Om Sai Dental Implant Center<br />
+              Dharan-2, Desi Line<br />
+              Sunsari, Nepal
             </p>
             <div className="mt-6 space-y-3 text-sm">
               <div className="flex items-center gap-3 text-muted-foreground">
                 <Phone className="size-4" />
-                <a href="tel:+442079460000" className="hover:text-foreground transition-colors">
-                  +44 20 7946 0000
+                <a href="tel:+97725538312" className="hover:text-foreground transition-colors">
+                  025-538312
                 </a>
               </div>
               <div className="flex items-center gap-3 text-muted-foreground">
                 <Mail className="size-4" />
-                <a href="mailto:hello@lumiere.dental" className="hover:text-foreground transition-colors">
-                  hello@lumiere.dental
+                {/* proof-gap: email */}
+                <a href="mailto:info@omsaidental.com" className="hover:text-foreground transition-colors">
+                  info@omsaidental.com
                 </a>
               </div>
               <div className="flex items-center gap-3 text-muted-foreground">
                 <MessageCircle className="size-4" />
-                <a href="#" className="hover:text-foreground transition-colors">
-                  WhatsApp the studio
+                <a
+                  href="https://wa.me/9779852057909"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  WhatsApp Dr. Ajit
                 </a>
               </div>
             </div>
@@ -58,14 +56,10 @@ export default function ContactPage() {
 
           <Reveal delay={0.1}>
             <div className="eyebrow mb-4 text-[var(--brass)]">Hours</div>
-            <ul className="divide-y divide-border/60">
-              {HOURS.map(([day, time]) => (
-                <li key={day} className="flex justify-between py-2.5 text-sm">
-                  <span>{day}</span>
-                  <span className="text-muted-foreground">{time}</span>
-                </li>
-              ))}
-            </ul>
+            {/* proof-gap: hours */}
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
+              Operating hours coming soon — please call to confirm.
+            </p>
           </Reveal>
 
           <Reveal delay={0.2}>
@@ -98,16 +92,21 @@ export default function ContactPage() {
                   <circle cx="280" cy="240" r="3" fill="oklch(0.957 0.014 85)" />
                 </g>
                 <text x="300" y="262" fill="oklch(0.301 0.025 145)" style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 14 }}>
-                  Lumière
+                  Om Sai
                 </text>
               </svg>
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-muted-foreground">
                 <span className="flex items-center gap-1.5">
                   <MapPin className="size-3" />
-                  Bond Street ⊙ 4 min walk
+                  Dharan-2 · Desi Line
                 </span>
-                <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="underline">
-                  Open in Maps
+                <a
+                  href="https://maps.google.com/?q=Om+Sai+Dental+Implant+Center+Dharan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  View on Google Maps
                 </a>
               </div>
             </div>

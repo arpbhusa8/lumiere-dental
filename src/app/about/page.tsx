@@ -1,27 +1,27 @@
 import { Reveal } from "@/components/motion/reveal";
 
-export const metadata = { title: "Studio" };
+export const metadata = { title: "About" };
 
-const RITUAL = [
+const PILLARS = [
   {
     n: "01",
-    title: "Arrival",
-    body: "A short walk from Bond Street. You will be greeted by name and shown to our reading room — espresso, herbal infusion, or simply quiet.",
+    title: "Specialist consult",
+    body: "Every patient begins with a structured conversation led by Dr. Ajit Yadav, MDS — Consultant Periodontist and Implantologist. We listen first, examine second, and explain what we find in language you can act on.",
   },
   {
     n: "02",
-    title: "Consultation",
-    body: "An unhurried hour with your clinician. We listen first, examine second, and never propose a treatment plan in the same appointment.",
+    title: "Evidence-led plan",
+    body: "Treatment plans are built around current periodontal and implant literature. As a lecturer at Nobel Medical College, Biratnagar, Dr. Ajit teaches the same protocols he uses in chair-side practice.",
   },
   {
     n: "03",
-    title: "Treatment",
-    body: "Cinematic ceilings, noise-cancelling headphones and aromatherapy. Every chair faces a courtyard window.",
+    title: "Considered treatment",
+    body: "Implants, gum care and restorations are delivered at a measured pace. We sequence visits around healing time and your schedule rather than around appointment slots.",
   },
   {
     n: "04",
-    title: "Aftercare",
-    body: "Three follow-ups, a direct phone number and an aftercare concierge for the first thirty days.",
+    title: "Plain post-op support",
+    body: "A direct phone line for the days that follow your procedure. Call or WhatsApp if something feels off — you reach a clinician, not a queue.",
   },
 ];
 
@@ -32,14 +32,14 @@ export default function AboutPage() {
         <Reveal>
           <div className="eyebrow mb-6">Philosophy</div>
           <h1 className="display text-[clamp(2.5rem,7vw,6.5rem)] tracking-[-0.03em] max-w-4xl">
-            A studio. <span className="italic text-[var(--brass)]">Not a clinic</span>.
+            A specialist practice. <span className="italic text-[var(--brass)]">Rooted in Dharan</span>.
           </h1>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-10 max-w-2xl text-base md:text-lg text-muted-foreground leading-relaxed">
-            Lumière was founded on a simple frustration: that dental care, when done with conviction
-            and time, is among the most beautiful and consequential gifts one can give another person.
-            We built a studio that treats it that way.
+            Om Sai Dental Implant Center is a consultant-led clinic in Dharan focused on
+            dental implants and periodontal care. Our work is shaped by an academic habit:
+            keep reading, keep questioning, and bring that thinking into every consultation.
           </p>
         </Reveal>
       </section>
@@ -69,21 +69,21 @@ export default function AboutPage() {
         <div className="md:col-span-7">
           <Reveal delay={0.1}>
             <h2 className="display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.02]">
-              Time set aside for <span className="italic text-[var(--brass)]">you</span>.
+              Academic authority, <span className="italic text-[var(--brass)]">chair-side</span>.
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="mt-8 text-base md:text-lg text-muted-foreground leading-relaxed">
-              Our calendars are deliberately sparse. A typical Lumière day holds six to eight
-              patients across four clinicians. The pace allows for thinking, for listening,
-              and for the small details that distinguish excellent work from ordinary work.
+              Dr. Ajit Yadav holds an MDS in Periodontology and lectures at Nobel Medical College,
+              Biratnagar. That teaching role is not a credential on a wall — it keeps the practice
+              honest. The protocols we use are the protocols he stands behind in a classroom.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
             <p className="mt-6 text-base md:text-lg text-muted-foreground leading-relaxed">
-              We invest in the best — microscopes, CBCT imaging, intra-oral scanners and
-              ceramicists trained in the Vienna school — but the most important investment
-              is the unhurried hour itself.
+              Specialist-level implant and periodontal care has historically meant a trip to
+              Kathmandu or across the border. Om Sai exists so that patients in eastern Nepal can
+              be assessed, planned and treated by a consultant periodontist close to home.
             </p>
           </Reveal>
         </div>
@@ -91,13 +91,13 @@ export default function AboutPage() {
 
       <section className="container-editorial mt-32">
         <Reveal>
-          <div className="eyebrow mb-6">The ritual</div>
+          <div className="eyebrow mb-6">How we work</div>
           <h2 className="display text-[clamp(2rem,4.5vw,4rem)] max-w-2xl">
-            Four acts. One <span className="italic">unhurried</span> visit.
+            Four pillars. One <span className="italic">considered</span> approach.
           </h2>
         </Reveal>
         <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-8 border-t border-border/60 pt-12">
-          {RITUAL.map((r, i) => (
+          {PILLARS.map((r, i) => (
             <Reveal key={r.n} delay={i * 0.08}>
               <div className="font-serif italic text-[var(--brass)] text-2xl mb-6">{r.n}</div>
               <h3 className="font-serif text-2xl tracking-tight mb-3">{r.title}</h3>

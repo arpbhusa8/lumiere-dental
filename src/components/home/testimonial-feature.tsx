@@ -1,12 +1,13 @@
 import { Reveal } from "@/components/motion/reveal";
 import type { Testimonial } from "@/lib/types";
 
-export function TestimonialFeature({ testimonials }: { testimonials: Testimonial[] }) {
-  const t = testimonials[0];
-  if (!t) return null;
+// proof-gap: testimonials
+// Do not fabricate quotes. Display a neutral placeholder until real,
+// consented patient testimonials are collected.
+export function TestimonialFeature({ testimonials: _testimonials }: { testimonials: Testimonial[] }) {
   return (
     <section className="py-28 md:py-40 bg-[var(--bone)]">
-      <div className="container-editorial max-w-4xl">
+      <div className="container-editorial max-w-3xl">
         <Reveal>
           <div className="eyebrow mb-10 flex items-center gap-3 justify-center">
             <span className="inline-block h-px w-8 bg-[var(--brass)]" />
@@ -15,16 +16,16 @@ export function TestimonialFeature({ testimonials }: { testimonials: Testimonial
           </div>
         </Reveal>
         <Reveal delay={0.1}>
-          <blockquote className="font-serif text-[clamp(1.75rem,3.5vw,3rem)] leading-[1.18] tracking-tight text-center text-foreground">
-            <span className="text-[var(--brass)] text-5xl align-top leading-none">“</span>
-            {t.quote}
-            <span className="text-[var(--brass)] text-5xl align-top leading-none">”</span>
-          </blockquote>
+          <p className="font-serif text-[clamp(1.5rem,3vw,2.5rem)] leading-[1.22] tracking-tight text-center text-foreground">
+            Testimonials are being collected with our patients&rsquo; consent —
+            <span className="italic text-[var(--brass)]"> coming soon</span>.
+          </p>
         </Reveal>
         <Reveal delay={0.2}>
-          <div className="mt-10 text-center eyebrow text-muted-foreground">
-            {t.patient_first_name}{t.treatment ? ` · ${t.treatment}` : ""}
-          </div>
+          <p className="mt-10 text-center text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
+            If you are a patient of Om Sai Dental Implant Center and would like
+            to share your experience, please let us know at your next visit.
+          </p>
         </Reveal>
       </div>
     </section>

@@ -19,20 +19,23 @@ export default async function DashboardPage() {
     .eq("patient_id", user.id)
     .order("starts_at", { ascending: false });
 
+  // Server Component: invoked once per request, not during React reconciliation.
+  // eslint-disable-next-line react-hooks/purity
+  const now = Date.now();
   const upcoming = (appts ?? []).filter(
-    (a) => new Date(a.starts_at).getTime() > Date.now() && a.status !== "cancelled"
+    (a) => new Date(a.starts_at).getTime() > now && a.status !== "cancelled"
   );
   const past = (appts ?? []).filter(
-    (a) => new Date(a.starts_at).getTime() <= Date.now() || a.status === "cancelled"
+    (a) => new Date(a.starts_at).getTime() <= now || a.status === "cancelled"
   );
 
   return (
     <div className="pt-36 pb-24">
       <section className="container-editorial">
         <Reveal>
-          <div className="eyebrow mb-6 text-[var(--brass)]">Your file</div>
+          <div className="eyebrow mb-6 text-[var(--brass)]">Om Sai Dental</div>
           <h1 className="display text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.03em]">
-            Welcome, <span className="italic">{user.email?.split("@")[0]}</span>.
+            Welcome back, <span className="italic">{user.email?.split("@")[0]}</span>.
           </h1>
         </Reveal>
 
@@ -53,17 +56,27 @@ export default async function DashboardPage() {
 
           <aside className="lg:col-span-4 space-y-6">
             <div className="rounded-2xl border border-border bg-card p-8">
-              <div className="eyebrow text-[var(--brass)] mb-3">Concierge</div>
-              <h3 className="font-serif text-2xl tracking-tight">Need to amend?</h3>
+              <div className="eyebrow text-[var(--brass)] mb-3">Need to change?</div>
+              <h3 className="font-serif text-2xl tracking-tight">Reach the clinic</h3>
               <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                Call our concierge or send a message. Cancellations within 48 hours forfeit the deposit.
+                Call or message to reschedule or ask a clinical question. We&apos;ll get back to you
+                directly.
               </p>
               <div className="mt-5 space-y-2 text-sm">
-                <a href="tel:+442079460000" className="block hover:text-foreground transition-colors text-muted-foreground">
-                  +44 20 7946 0000
+                <a href="tel:+97725538312" className="block hover:text-foreground transition-colors text-muted-foreground">
+                  025-538312
                 </a>
-                <a href="mailto:concierge@lumiere.dental" className="block hover:text-foreground transition-colors text-muted-foreground">
-                  concierge@lumiere.dental
+                <a
+                  href="https://wa.me/9779852057909"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block hover:text-foreground transition-colors text-muted-foreground"
+                >
+                  WhatsApp Dr. Ajit
+                </a>
+                {/* proof-gap: email */}
+                <a href="mailto:info@omsaidental.com" className="block hover:text-foreground transition-colors text-muted-foreground">
+                  info@omsaidental.com
                 </a>
               </div>
             </div>

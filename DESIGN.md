@@ -1,11 +1,20 @@
-# Lumière Dental Studio — Design System
+# Om Sai Dental Implant Center — Design System
 
-> Premium boutique dental clinic. Editorial, calm, clinical-luxe. Default rename: `Lumière Dental Studio`.
+> Specialist implant + periodontal clinic in Dharan, Nepal. Editorial, calm, clinically authoritative. Brand name: `Om Sai Dental Implant Center` (short: `Om Sai Dental`).
 
 ## Brand Positioning
-- **Tone:** quiet luxury, spa-meets-clinic, magazine-editorial.
-- **Audience:** affluent professionals 30–60, cosmetic + general dentistry.
-- **Anti-pattern:** cartoon teeth, neon blue, "smile" wordmarks, comic-sans warmth.
+- **Tone:** authoritative-warm. Expert, reassuring, professional. Academic voice softened by patient-first warmth.
+- **Audience:** adults 35–65 in Dharan and the wider Sunsari district who need a reliable tooth-replacement (implants) or gum-disease (periodontal) solution — typically professionals, parents, and elders weighing local care vs. travelling to Kathmandu or India.
+- **Positioning (Lumen):** for adults 35–65 in Dharan, Om Sai Dental Implant Center is the specialist-consultant clinic that pairs academic authority with transparent, locally-delivered care — unlike generic dental shops or distant hospital departments — because Dr. Ajit Yadav is an MDS-qualified Periodontist, Implantologist, and Nobel Medical College (Biratnagar) lecturer.
+- **4 messaging pillars:**
+  1. **Academic Authority** — MDS Periodontology + Nobel Medical College lecturer.
+  2. **Transparent Pricing** — a published guide answers "how much" before the chair.
+  3. **Patient-First Comfort** — dedicated post-op hotline, plain-language explanations.
+  4. **Local Specialist, No Travel** — specialist care without trips to Kathmandu or India.
+- **DO words:** expert, guide, explain, reassure, trusted, clear, specialist, consult, MDS, periodontist, implantologist.
+- **BANNED words (hard reject in copy, meta, alt text, captions):** `discount`, `cheapest`, `best`, `miracle`, `guarantee`, `elite`, `50% off`, `limited offer`, `painless guarantee`, `100% success`, `Nepal's #1`, `smile makeover`, `smile journey`, `transform your smile`, `dream smile`, `luxury`, `premier`, `top-tier`, `world-class`, `exclusive`.
+- **Anti-pattern visuals:** cartoon teeth, neon blue, "smile" wordmarks, comic-sans warmth, stock thumbs-up patient shots, deal/discount badges.
+- **Architectural rule:** brand-first, location-agnostic titles/nav/meta. "Dharan" appears in body content, not as part of the wordmark. Locations module is built to accept N clinics (future Kathmandu branch) — today renders one card for Dharan-2, Desi Line, Sunsari.
 
 ## Color Palette — "Warm Ivory + Sage"
 
@@ -67,22 +76,26 @@ Charts: sage scale (5 steps from primary to forest).
 ## Pages
 | Route | Purpose |
 |---|---|
-| `/` | Hero film → press strip → philosophy → services tease → team grid → testimonial → CTA |
+| `/` | Hero (Dr. Ajit, expert implantologist in Dharan) → credentials strip → 3 value props → services tease → team → testimonial → FAQ → CTA |
 | `/services` | Treatment menu with sticky horizontal scroll detail |
+| `/implants` | Pillar page — Dental Implant Specialist in Dharan (Dr. Ajit Yadav, MDS) |
+| `/pricing-guide` | Pillar page — Dental Implant Cost Guide (transparent ranges, owner-approved only) |
+| `/gum-disease` | Pillar page — Gum Disease Treatment in Dharan, expert periodontal care |
+| `/journal` | Editorial articles — pricing, procedure walk-throughs, gum-health guides |
 | `/team` | Editorial portraits, credentials |
-| `/about` | Studio philosophy, virtual tour video |
-| `/booking` | Multi-step: type → date/time → details → confirm |
+| `/about` | Clinic philosophy, MDS-led care narrative |
+| `/booking` | Multi-step: visit type → focus → date/time → details → confirm |
 | `/login` | Email magic-link via Supabase |
 | `/signup` | Same, with name fields |
 | `/dashboard` | Patient appointments + records |
-| `/contact` | Address, hours, map, WhatsApp |
+| `/contact` | Address (Dharan-2, Desi Line, Sunsari), hours, map, phone, WhatsApp |
 
 ## Booking Flow
-1. **Type** — New patient / Returning / Specialist consult.
-2. **Service** — General / Cosmetic / Implants / Orthodontics / Whitening.
-3. **Date & Time** — calendar + slot grid.
-4. **Details** — name, phone, email, notes.
-5. **Confirm** — review + submit + email confirmation.
+1. **Visit type** — New patient / Returning / Specialist consult (implant or periodontal).
+2. **Focus** — Implant consultation / Periodontal (gum-disease) assessment / Restoration follow-up / General assessment.
+3. **Date & Time** — calendar + slot grid (real availability table planned; see `NEXT.md`).
+4. **Details** — name, phone, email, optional notes (e.g. previous X-rays, referral, language preference).
+5. **Confirm** — review + submit → email + WhatsApp confirmation (Resend integration planned). Phone fallback: `025-538312`.
 
 ## Accessibility
 - WCAG AA on all text pairs. Sage on ivory passes for `>=18px` only — body uses ink on ivory.
