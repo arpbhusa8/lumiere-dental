@@ -1,6 +1,9 @@
+import Image from "next/image";
 import { Reveal } from "@/components/motion/reveal";
 
 export const metadata = { title: "About" };
+
+const CLINIC_RECOGNITION_PHOTO = "/about/dr-ajit-recognition.png";
 
 const PILLARS = [
   {
@@ -47,23 +50,15 @@ export default function AboutPage() {
       <section className="container-editorial mt-28 grid md:grid-cols-12 gap-12">
         <div className="md:col-span-5">
           <Reveal>
-            <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-[var(--forest)] relative">
-              <svg viewBox="0 0 400 500" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid slice">
-                <defs>
-                  <linearGradient id="abg" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="oklch(0.4 0.04 145)" />
-                    <stop offset="100%" stopColor="oklch(0.22 0.025 145)" />
-                  </linearGradient>
-                </defs>
-                <rect width="400" height="500" fill="url(#abg)" />
-                <g stroke="oklch(0.85 0.04 85 / 0.45)" strokeWidth="0.8" fill="none">
-                  <path d="M50 460 C 100 380, 90 280, 130 200 C 175 110, 200 60, 195 10" />
-                  <path d="M250 480 C 230 370, 270 260, 240 180 C 215 110, 230 50, 270 20" />
-                  <path d="M340 470 C 330 350, 345 260, 320 170" />
-                  <circle cx="290" cy="100" r="48" fill="oklch(0.85 0.06 75 / 0.12)" stroke="none" />
-                </g>
-              </svg>
-            </div>
+            <figure className="aspect-[4/5] rounded-2xl overflow-hidden bg-[var(--forest)] relative">
+              <Image
+                src={CLINIC_RECOGNITION_PHOTO}
+                alt="Dr. Ajit Yadav at Om Sai Dental Implant Center, Dharan-2 Deshiline, receiving a certificate of appreciation"
+                fill
+                sizes="(max-width: 768px) 100vw, 42vw"
+                className="object-cover"
+              />
+            </figure>
           </Reveal>
         </div>
         <div className="md:col-span-7">
