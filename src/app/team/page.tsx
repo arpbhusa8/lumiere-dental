@@ -1,6 +1,9 @@
+import Image from "next/image";
 import { Reveal } from "@/components/motion/reveal";
 
 export const metadata = { title: "Dr. Ajit Yadav" };
+
+const AJIT_PHOTO = "/team/dr-ajit-yadav.png";
 
 export default function TeamPage() {
   return (
@@ -26,8 +29,7 @@ export default function TeamPage() {
           className="grid md:grid-cols-12 gap-12 items-center"
         >
           <Reveal className="md:col-span-5">
-            {/* proof-gap: photo */}
-            <PortraitTile name="Dr Ajit Yadav" />
+            <PortraitTile name="Dr Ajit Yadav" photoUrl={AJIT_PHOTO} />
           </Reveal>
           <div className="md:col-span-7">
             <Reveal delay={0.1}>
@@ -59,30 +61,17 @@ export default function TeamPage() {
   );
 }
 
-function PortraitTile({ name }: { name: string }) {
-  const initials = name.replace(/^Dr\s|^Mrs?\s/, "").split(" ").map((w) => w[0]).join("").slice(0, 2);
+function PortraitTile({ name, photoUrl }: { name: string; photoUrl: string }) {
   return (
     <div className="aspect-[4/5] rounded-2xl overflow-hidden relative bg-[var(--muted)]">
-      <svg viewBox="0 0 200 250" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 w-full h-full">
-        <defs>
-          <linearGradient id={`pt-${initials}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="oklch(0.86 0.025 85)" />
-            <stop offset="100%" stopColor="oklch(0.7 0.022 95)" />
-          </linearGradient>
-        </defs>
-        <rect width="200" height="250" fill={`url(#pt-${initials})`} />
-        <circle cx="100" cy="90" r="42" fill="oklch(0.58 0.022 145 / 0.35)" />
-        <path d="M35 250 C 35 175, 165 175, 165 250 Z" fill="oklch(0.58 0.022 145 / 0.32)" />
-        <text
-          x="100"
-          y="230"
-          textAnchor="middle"
-          className="fill-[oklch(0.301_0.025_145)]"
-          style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 42, fontWeight: 300, fontStyle: "italic" }}
-        >
-          {initials.toLowerCase()}
-        </text>
-      </svg>
+      <Image
+        src={photoUrl}
+        alt={`${name} portrait`}
+        fill
+        priority
+        sizes="(max-width: 768px) 100vw, 42vw"
+        className="object-cover"
+      />
     </div>
   );
 }

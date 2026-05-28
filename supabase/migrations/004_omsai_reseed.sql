@@ -40,9 +40,9 @@ insert into public.services (slug, name, category, duration_minutes, price_from,
 ('tooth-extraction','Tooth Extraction','general',45,null,'Removal of a non-restorable or impacted tooth under local anaesthesia.',true,11),
 ('teeth-whitening','Teeth Whitening','cosmetic',60,null,'In-clinic whitening procedure to lighten the shade of natural teeth.',true,12);
 
--- Seed practitioner (1 row): Dr. Ajit Yadav. Photo URL left NULL (proof gap: clinical photo pending).
+-- Seed practitioner (1 row): Dr. Ajit Yadav. Photo served from public/team/dr-ajit-yadav.png.
 insert into public.practitioners (slug, name, credentials, bio, photo_url, is_active, sort_order) values
-('dr-ajit-yadav','Dr. Ajit Yadav','MDS, Consultant Periodontist & Implantologist','Dr. Ajit Yadav is a Consultant Periodontist and Implantologist holding an MDS in Periodontology. He also serves as a Lecturer at Nobel Medical College, Biratnagar. His clinical focus is dental implants and the management of periodontal conditions.',null,true,1);
+('dr-ajit-yadav','Dr. Ajit Yadav','MDS, Consultant Periodontist & Implantologist','Dr. Ajit Yadav is a Consultant Periodontist and Implantologist holding an MDS in Periodontology. He also serves as a Lecturer at Nobel Medical College, Biratnagar. His clinical focus is dental implants and the management of periodontal conditions.','/team/dr-ajit-yadav.png',true,1);
 
 -- Testimonials: intentionally empty.
 -- proof-gap: testimonials — no patient quotes have been collected with consent yet.

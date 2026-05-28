@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight, MessageCircle } from "lucide-react";
@@ -7,6 +8,7 @@ import { WordStagger } from "@/components/motion/word-stagger";
 import { Button } from "@/components/ui/button";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+const AJIT_PHOTO = "/team/dr-ajit-yadav.png";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -79,8 +81,14 @@ export function Hero() {
             transition={{ duration: reduce ? 0 : 1.4, ease: EASE, delay: 0.3 }}
             className="aspect-[4/5] rounded-2xl overflow-hidden relative bg-[var(--forest)]"
           >
-            {/* proof-gap: hero clinic/portrait photo */}
-            <HeroIllustration />
+            <Image
+              src={AJIT_PHOTO}
+              alt="Dr. Ajit Yadav, Consultant Periodontist and Implantologist, Om Sai Dental Implant Center, Dharan"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-cover"
+            />
           </motion.div>
 
           <motion.div
@@ -100,42 +108,6 @@ export function Hero() {
 
       <BackgroundOrnament />
     </section>
-  );
-}
-
-function HeroIllustration() {
-  return (
-    <svg
-      viewBox="0 0 400 500"
-      className="absolute inset-0 w-full h-full"
-      preserveAspectRatio="xMidYMid slice"
-      role="img"
-      aria-label="Abstract botanical illustration"
-    >
-      <defs>
-        <linearGradient id="hgrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="oklch(0.4 0.04 145)" />
-          <stop offset="100%" stopColor="oklch(0.2 0.025 145)" />
-        </linearGradient>
-        <radialGradient id="hgrad2" cx="60%" cy="35%" r="55%">
-          <stop offset="0%" stopColor="oklch(0.7 0.06 75 / 0.45)" />
-          <stop offset="100%" stopColor="transparent" />
-        </radialGradient>
-      </defs>
-      <rect width="400" height="500" fill="url(#hgrad)" />
-      <rect width="400" height="500" fill="url(#hgrad2)" />
-      {/* Botanical strokes */}
-      <g stroke="oklch(0.85 0.04 85 / 0.55)" strokeWidth="1.2" fill="none" strokeLinecap="round">
-        <path d="M120 480 C 140 380, 130 290, 165 200 C 195 140, 210 90, 200 30" />
-        <path d="M165 200 C 130 195, 100 180, 75 150" />
-        <path d="M180 260 C 215 245, 240 220, 255 185" />
-        <path d="M150 340 C 115 330, 90 305, 75 270" />
-        <path d="M195 110 C 230 95, 250 70, 260 35" />
-      </g>
-      {/* Sun disc */}
-      <circle cx="290" cy="120" r="56" fill="oklch(0.85 0.06 75 / 0.18)" />
-      <circle cx="290" cy="120" r="32" fill="oklch(0.85 0.06 75 / 0.32)" />
-    </svg>
   );
 }
 
