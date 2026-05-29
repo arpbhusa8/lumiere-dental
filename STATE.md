@@ -59,6 +59,14 @@ These are the artifacts the site is waiting on. Each is reflected as a placehold
 4. **Dr. Ajit clinical photo (MED)** — practitioner portrait is an SVG placeholder. Commissioned editorial-lit photo required (chair-side or portrait, warm white balance).
 5. **Clinic equipment confirmation (MED)** — FAQ + services copy currently says "Digital X-rays today; CBCT planned." Confirm CBCT / intra-oral camera / implant system(s) before publishing specifics.
 6. **Operating hours (LOW)** — `/contact` shows placeholder Sun–Fri 9am–6pm, Sat closed. Owner to confirm true hours before publish.
+7. **Team photos: Dr. Priyesh Kamat + Renuka Rai (MED)** — photos exist in the `#om-sai-dental` Slack channel but could not be pulled into the repo (claude.ai Slack MCP returns images as rendered blocks, no local token / download URL). `/team` + home grid render an initials-avatar fallback until the files land. Drop `public/team/dr-priyesh-kamat.png` and `public/team/renuka-rai.png` — the server resolver (`src/lib/team.ts → resolveTeam`) auto-swaps the avatar for the photo, no code change needed.
+8. **Team LinkedIn URLs (LOW)** — `src/lib/team.ts` keeps `linkedin: null` for all members. Web research found no confirmed profiles (incl. Dr. Priyesh Kamat, NMC No. 43429). Do NOT fabricate — set the field to a confirmed URL only; the LinkedIn link renders conditionally when present.
+
+### Team roster (added 2026-05-29)
+- **Dr. Ajit Yadav** — MDS, lead clinician (existing).
+- **Dr. Priyesh Kamat** — BDS (BPKIHS), Dental Surgeon, NMC No. 43429. Added as a bookable practitioner via migration `005_omsai_team_additions.sql` (applied to remote). Facts sourced from Slack.
+- **Renuka Rai** — B.Ed, Office Assistant. Non-clinical / not bookable; rendered on `/team` from `src/lib/team.ts` only (not in the `practitioners` table).
+- New: real Google Maps embed (`src/components/site/clinic-map.tsx`, keyless) on `/contact` and a "Find us" section on the home page; replaces the old SVG map placeholder.
 
 ## Files of note
 
