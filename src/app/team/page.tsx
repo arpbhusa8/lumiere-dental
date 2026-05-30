@@ -100,8 +100,57 @@ function ClinicianRow({
             {member.bio}
           </p>
         </Reveal>
-        {member.linkedin && (
+        {typeof member.implantsPlaced === "number" && (
+          <Reveal delay={0.25}>
+            <p className="mt-8 font-serif text-2xl md:text-3xl text-[var(--brass)]">
+              {member.implantsPlaced}+{" "}
+              <span className="text-foreground">dental implants placed</span>
+            </p>
+          </Reveal>
+        )}
+        {member.expertise && member.expertise.length > 0 && (
           <Reveal delay={0.3}>
+            <div className="mt-8">
+              <div className="eyebrow text-[var(--brass)] mb-3 text-xs">
+                Areas of expertise
+              </div>
+              <ul className="flex flex-wrap gap-2.5">
+                {member.expertise.map((item) => (
+                  <li
+                    key={item}
+                    className="rounded-full border border-border/60 px-4 py-1.5 text-sm text-muted-foreground"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        )}
+        {member.publications && member.publications.length > 0 && (
+          <Reveal delay={0.35}>
+            <div className="mt-10">
+              <div className="eyebrow text-[var(--brass)] mb-4 text-xs">
+                Research &amp; publications
+              </div>
+              <ul className="space-y-5 border-t border-border/60 pt-5 max-w-xl">
+                {member.publications.map((pub) => (
+                  <li key={pub.title}>
+                    <p className="font-serif text-base leading-snug">
+                      {pub.title}
+                    </p>
+                    <p className="mt-1.5 text-sm text-muted-foreground">
+                      {pub.authors}
+                      {pub.source ? ` · ${pub.source}` : ""}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        )}
+        {member.linkedin && (
+          <Reveal delay={0.4}>
             <a
               href={member.linkedin}
               target="_blank"

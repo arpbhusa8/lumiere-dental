@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Reveal } from "@/components/motion/reveal";
+import { TEAM } from "@/lib/team";
 
 export const metadata = { title: "About" };
 
@@ -25,6 +26,20 @@ const PILLARS = [
     n: "04",
     title: "Plain post-op support",
     body: "A direct phone line for the days that follow your procedure. Call or WhatsApp if something feels off — you reach a clinician, not a queue.",
+  },
+];
+
+const ajit = TEAM.find((m) => m.slug === "dr-ajit-yadav");
+
+const CLINICAL_STATS = [
+  {
+    stat: ajit?.implantsPlaced ? `${ajit.implantsPlaced}+` : "—",
+    label: "Dental implants placed",
+  },
+  { stat: "MDS", label: "Periodontology" },
+  {
+    stat: String(ajit?.publications?.length ?? 0),
+    label: "Peer-reviewed publications",
   },
 ];
 
@@ -82,6 +97,52 @@ export default function AboutPage() {
             </p>
           </Reveal>
         </div>
+      </section>
+
+      <section className="container-editorial mt-28">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 border-t border-border/60 pt-12">
+          {CLINICAL_STATS.map((s, i) => (
+            <Reveal key={s.label} delay={i * 0.08}>
+              <div className="font-serif text-[clamp(2.5rem,6vw,4rem)] text-[var(--brass)] leading-none">
+                {s.stat}
+              </div>
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                {s.label}
+              </p>
+            </Reveal>
+          ))}
+        </div>
+        {ajit?.expertise && ajit.expertise.length > 0 && (
+          <Reveal delay={0.1}>
+            <div className="mt-14">
+              <div className="eyebrow text-[var(--brass)] mb-4 text-xs">
+                Areas of expertise
+              </div>
+              <ul className="flex flex-wrap gap-2.5">
+                {ajit.expertise.map((e) => (
+                  <li
+                    key={e}
+                    className="rounded-full border border-border/60 px-4 py-1.5 text-sm text-muted-foreground"
+                  >
+                    {e}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        )}
+        <Reveal delay={0.15}>
+          <p className="mt-10 text-sm text-muted-foreground">
+            Full peer-reviewed publication list on the{" "}
+            <a
+              href="/team#dr-ajit-yadav"
+              className="underline underline-offset-4 hover:text-[var(--brass)] transition-colors"
+            >
+              team page
+            </a>
+            .
+          </p>
+        </Reveal>
       </section>
 
       <section className="container-editorial mt-32">

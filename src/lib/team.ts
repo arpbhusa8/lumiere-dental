@@ -14,6 +14,13 @@ import { join } from "node:path";
 
 export type TeamRole = "clinician" | "support";
 
+export type Publication = {
+  title: string;
+  authors: string;
+  /** Journal / year citation, or null when not yet confirmed. */
+  source: string | null;
+};
+
 export type TeamMember = {
   slug: string;
   name: string;
@@ -31,6 +38,12 @@ export type TeamMember = {
   linkedin: string | null;
   /** Whether this member can be selected when booking an appointment. */
   bookable: boolean;
+  /** Cumulative implant placements, when the clinician has confirmed a figure. */
+  implantsPlaced?: number;
+  /** Surgical / clinical areas of expertise. */
+  expertise?: string[];
+  /** Peer-reviewed publications authored by this clinician. */
+  publications?: Publication[];
 };
 
 export type ResolvedTeamMember = TeamMember & {
@@ -51,6 +64,31 @@ export const TEAM: TeamMember[] = [
     photoFile: "dr-ajit-yadav.png",
     linkedin: null, // proof-gap: confirmed LinkedIn URL not yet provided
     bookable: true,
+    implantsPlaced: 100,
+    expertise: [
+      "Gingival surgery",
+      "Surgical extraction",
+      "Aesthetic restoration & surgery",
+    ],
+    publications: [
+      {
+        title:
+          "Clinical perspective of myths about oral health in patients visiting tertiary hospital in eastern Nepal: A descriptive cross-sectional study",
+        authors: "Yadav AK, Giri DK, Subedi K",
+        source: null,
+      },
+      {
+        title:
+          "Coronavirus Disease 2019 Awareness among Dental Undergraduate Students in a Teaching Hospital of Eastern Nepal",
+        authors: "Yadav AK, Giri DK, Subedi K",
+        source: "2022",
+      },
+      {
+        title: "Gingival Depigmentation: A Surgery for Aesthetics",
+        authors: "Yadav AK, Giri DK",
+        source: "J Nepal Soc Perio Oral Implantol. 2019;3(5):29–31",
+      },
+    ],
   },
   {
     slug: "dr-priyesh-kamat",
