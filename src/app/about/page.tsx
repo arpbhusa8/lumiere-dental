@@ -4,7 +4,7 @@ import { TEAM } from "@/lib/team";
 
 export const metadata = { title: "About" };
 
-const CLINIC_RECOGNITION_PHOTO = "/about/dr-ajit-recognition.png";
+const CLINIC_RECOGNITION_PHOTO = "/about/dr-ajit-recognition.webp";
 
 const PILLARS = [
   {
