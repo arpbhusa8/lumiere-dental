@@ -106,8 +106,10 @@ drop policy if exists "feedback public read" on public.feedback;
 
 -- No INSERT/UPDATE grants or policies (writes go through SECURITY DEFINER RPCs).
 -- SELECT only to authenticated; the self/admin RLS policies above gate rows.
--- anon gets NO access to this table.
-revoke select on public.feedback from anon;
+-- Supabase's default privileges auto-grant new public tables to anon, so revoke
+-- ALL from anon (not just select) — feedback carries PII and must be invisible
+-- to the anon/publishable key.
+revoke all on public.feedback from anon;
 grant select on public.feedback to authenticated;
 
 -- ---------------------------------------------------------------------------
