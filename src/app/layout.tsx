@@ -3,7 +3,7 @@ import { Fraunces, Inter, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
-import { WhatsAppEnquiry } from "@/components/site/whatsapp-enquiry";
+import { EnquiryWidget } from "@/components/site/enquiry-widget";
 import { PostHogProvider } from "@/components/analytics/posthog-provider";
 import "./globals.css";
 
@@ -61,7 +61,7 @@ export default function RootLayout({
           <SiteNav />
           <main className="flex-1">{children}</main>
           <SiteFooter />
-          <WhatsAppEnquiry />
+          <EnquiryWidget />
           <Toaster position="bottom-right" />
         </PostHogProvider>
       </body>
