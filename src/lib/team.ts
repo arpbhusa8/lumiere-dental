@@ -75,18 +75,18 @@ export const TEAM: TeamMember[] = [
         title:
           "Clinical perspective of myths about oral health in patients visiting tertiary hospital in eastern Nepal: A descriptive cross-sectional study",
         authors: "Yadav AK, Giri DK, Subedi K",
-        source: null,
+        source: "J Kathmandu Med Coll. 2021;10(3):152–156",
       },
       {
         title:
           "Coronavirus Disease 2019 Awareness among Dental Undergraduate Students in a Teaching Hospital of Eastern Nepal",
         authors: "Yadav AK, Giri DK, Subedi K",
-        source: "2022",
+        source: "J Nepal Dent Assoc. 2022;22(35):76–83",
       },
       {
         title: "Gingival Depigmentation: A Surgery for Aesthetics",
         authors: "Yadav AK, Giri DK",
-        source: "J Nepal Soc Perio Oral Implantol. 2019;3(5):29–31",
+        source: "J Nepal Soc Perio Oral Implantol. 2019;3(1):29–31",
       },
     ],
   },
