@@ -54,3 +54,8 @@ next-env.d.ts
 # Claude Code local audit log
 .claude/audit.log
 .firecrawl/
+
+# Cloudflare / OpenNext build output
+.open-next/
+.wrangler/
+cloudflare-env.d.ts
