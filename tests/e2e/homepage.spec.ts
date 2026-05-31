@@ -14,6 +14,6 @@ test.describe("Homepage", () => {
     await page.goto("/");
     await page.getByRole("link", { name: "Treatments", exact: true }).first().click();
     await expect(page).toHaveURL(/\/services/);
-    await expect(page.locator("h1")).toContainText(/menu/i);
+    await expect(page.locator("h1")).toContainText(/specialist care/i);
   });
 });
