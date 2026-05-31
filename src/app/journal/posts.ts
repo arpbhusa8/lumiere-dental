@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 export type Pillar = {
   slug: "implants" | "pricing-guide" | "gum-disease";
   label: string;
@@ -111,7 +109,3 @@ export const AUTHOR = {
 };
 
 export const LAST_REVIEWED = "2026-05-28";
-
-// Body content lives in JSX files to keep this module type-safe.
-// Each body file default-exports a ReactNode under BodyKey.
-export type BodyComponent = () => ReactNode;
