@@ -5,12 +5,10 @@
 // LinkedIn URLs. `linkedin: null` is a tracked proof gap, not a placeholder to be filled
 // with a guess — leave null until a confirmed profile URL is provided.
 //
-// Photos: drop the file named in `photoFile` into `public/team/`. The server resolver
-// (`resolveTeam` in this module) auto-detects it and the UI swaps the initials avatar for
-// the real photo — no code change needed once the image lands.
-
-import { existsSync } from "node:fs";
-import { join } from "node:path";
+// Photos: add the file to `public/team/` and set `photoFile` to its name. Set
+// `photoFile: null` for a member with no photo — the UI shows an initials avatar.
+// (Resolution is data-driven, not filesystem-probed, so it works on edge/serverless
+// runtimes like Cloudflare Workers that have no fs at request time.)
 
 export type TeamRole = "clinician" | "support";
 
@@ -32,8 +30,8 @@ export type TeamMember = {
   /** Nepal Medical Council registration number, when applicable. */
   nmcNo: string | null;
   bio: string;
-  /** Expected filename under public/team/. */
-  photoFile: string;
+  /** Filename under public/team/, or null when the member has no photo. */
+  photoFile: string | null;
   /** Confirmed LinkedIn profile URL, or null (proof gap — never fabricate). */
   linkedin: string | null;
   /** Whether this member can be selected when booking an appointment. */
@@ -117,14 +115,14 @@ export const TEAM: TeamMember[] = [
 ];
 
 /**
- * Server-only. Resolves each member's photo path against public/team/, returning
- * photoUrl when the file exists and null otherwise. Call from server components.
+ * Resolves each member's public photo path from `photoFile` (null → initials
+ * fallback). Data-driven — no filesystem access — so it renders correctly on
+ * edge/serverless runtimes (Cloudflare Workers) as well as Node.
  */
 export function resolveTeam(members: TeamMember[] = TEAM): ResolvedTeamMember[] {
-  const dir = join(process.cwd(), "public", "team");
   return members.map((m) => ({
     ...m,
-    photoUrl: existsSync(join(dir, m.photoFile)) ? `/team/${m.photoFile}` : null,
+    photoUrl: m.photoFile ? `/team/${m.photoFile}` : null,
   }));
 }
 

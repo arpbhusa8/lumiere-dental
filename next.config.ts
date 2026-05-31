@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Cloudflare Workers has no built-in Next image optimizer (no IMAGES binding),
+  // so the /_next/image endpoint 400s there. Our portraits are already small,
+  // display-sized WebP, so serve them as-is: next/image emits a direct <img>
+  // pointing at the original asset (200 on both Cloudflare and Node).
+  images: { unoptimized: true },
 };
 
 export default nextConfig;
