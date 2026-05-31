@@ -19,13 +19,19 @@ export default async function AdminLayout({
             <div className="eyebrow text-[var(--brass)] mb-2">Om Sai Dental · Admin</div>
             <h1 className="font-serif text-3xl tracking-tight">Practice dashboard</h1>
           </div>
-          <nav className="flex items-center gap-1">
-            <Button asChild variant="ghost" size="sm" className="rounded-full">
-              <Link href="/admin">Bookings</Link>
-            </Button>
-            <Button asChild variant="ghost" size="sm" className="rounded-full">
-              <Link href="/admin/feedback">Feedback</Link>
-            </Button>
+          <nav className="flex flex-wrap items-center gap-1">
+            {[
+              ["/admin", "Bookings"],
+              ["/admin/feedback", "Feedback"],
+              ["/admin/doctors", "Doctors"],
+              ["/admin/journals", "Journal"],
+              ["/admin/promotions", "Promotions"],
+              ["/admin/faqs", "FAQs"],
+            ].map(([href, label]) => (
+              <Button key={href} asChild variant="ghost" size="sm" className="rounded-full">
+                <Link href={href}>{label}</Link>
+              </Button>
+            ))}
             <form action="/auth/signout" method="post">
               <Button type="submit" variant="ghost" size="sm" className="rounded-full text-muted-foreground">
                 Sign out

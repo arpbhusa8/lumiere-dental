@@ -77,3 +77,30 @@ export type Feedback = {
 };
 
 export type UserRole = "customer" | "admin";
+
+export type JournalPost = {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  body: string;
+  cover_image: string | null;
+  author: string | null;
+  is_published: boolean;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type Promotion = {
+  id: string;
+  title: string;
+  description: string | null;
+  discount_label: string | null;
+  starts_on: string | null;
+  ends_on: string | null;
+  is_active: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+};

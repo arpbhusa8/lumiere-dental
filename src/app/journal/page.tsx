@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/motion/reveal";
+import { createClient } from "@/lib/supabase/server";
+import type { JournalPost } from "@/lib/types";
 import { POSTS } from "./posts";
 
 export const metadata: Metadata = {
@@ -22,8 +24,18 @@ const DATE_FMT = new Intl.DateTimeFormat("en-GB", {
   year: "numeric",
 });
 
-export default function JournalIndexPage() {
+export default async function JournalIndexPage() {
   const posts = [...POSTS].sort((a, b) => (a.date < b.date ? 1 : -1));
+
+  // Additive: editor-published posts from the DB (admin Journal manager).
+  // These sit alongside the hand-written pillar articles above.
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("journal_posts")
+    .select("*")
+    .eq("is_published", true)
+    .order("published_at", { ascending: false });
+  const dbPosts = (data ?? []) as JournalPost[];
 
   return (
     <div className="pt-36 pb-24">
@@ -87,6 +99,51 @@ export default function JournalIndexPage() {
           ))}
         </ul>
       </section>
+
+      {dbPosts.length > 0 && (
+        <section className="container-editorial mt-28">
+          <Reveal>
+            <div className="eyebrow mb-8">Latest posts</div>
+          </Reveal>
+          <ul className="divide-y divide-border/60 border-t border-border/60">
+            {dbPosts.map((post, i) => (
+              <li key={post.id}>
+                <Reveal delay={i * 0.06}>
+                  <Link
+                    href={`/journal/${post.slug}`}
+                    className="grid grid-cols-12 gap-6 py-10 group"
+                  >
+                    <div className="col-span-12 md:col-span-2">
+                      {post.published_at && (
+                        <div className="text-sm text-muted-foreground">
+                          <time dateTime={post.published_at}>
+                            {DATE_FMT.format(new Date(post.published_at))}
+                          </time>
+                        </div>
+                      )}
+                    </div>
+                    <div className="col-span-12 md:col-span-8">
+                      <h2 className="font-serif text-2xl md:text-[1.875rem] leading-[1.15] tracking-tight group-hover:text-[var(--brass)] transition-colors">
+                        {post.title}
+                      </h2>
+                      {post.excerpt && (
+                        <p className="mt-3 text-sm md:text-base text-muted-foreground leading-relaxed max-w-2xl">
+                          {post.excerpt}
+                        </p>
+                      )}
+                    </div>
+                    <div className="col-span-12 md:col-span-2 self-end md:self-center text-right">
+                      <span className="eyebrow underline-offset-4 underline decoration-[var(--brass)]/40 group-hover:decoration-foreground">
+                        Read
+                      </span>
+                    </div>
+                  </Link>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section className="container-editorial mt-28">
         <div className="rounded-3xl bg-[var(--forest)] text-[var(--ivory)] p-12 md:p-20">

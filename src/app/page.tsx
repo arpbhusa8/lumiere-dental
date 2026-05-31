@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { Hero } from "@/components/home/hero";
+import { PromotionsStrip } from "@/components/home/promotions-strip";
 import { PressStrip } from "@/components/home/press-strip";
 import { Philosophy } from "@/components/home/philosophy";
 import { ServicesTeaser } from "@/components/home/services-teaser";
@@ -20,6 +21,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <PromotionsStrip />
       <PressStrip />
       <Philosophy />
       <ServicesTeaser services={(services ?? []) as Service[]} />
