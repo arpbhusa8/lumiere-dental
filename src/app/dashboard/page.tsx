@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
+import { StatusPill, PaymentPill } from "@/components/site/booking-badges";
+import { FeedbackForm } from "@/components/dashboard/feedback-form";
 import { createClient } from "@/lib/supabase/server";
 import type { Appointment } from "@/lib/types";
 
@@ -18,6 +20,17 @@ export default async function DashboardPage() {
     .select("*, services(name, duration_minutes), practitioners(name)")
     .eq("patient_id", user.id)
     .order("starts_at", { ascending: false });
+
+  const { data: feedback } = await supabase
+    .from("feedback")
+    .select("appointment_id")
+    .eq("patient_id", user.id);
+
+  const reviewedIds = new Set(
+    (feedback ?? [])
+      .map((f) => f.appointment_id)
+      .filter((id): id is string => Boolean(id))
+  );
 
   // Server Component: invoked once per request, not during React reconciliation.
   // eslint-disable-next-line react-hooks/purity
@@ -45,11 +58,13 @@ export default async function DashboardPage() {
               title="Upcoming"
               empty="No upcoming appointments. Reserve your next hour."
               appts={upcoming as AppointmentRow[]}
+              reviewedIds={reviewedIds}
             />
             <Section
               title="History"
               empty="Past appointments will appear here."
               appts={past as AppointmentRow[]}
+              reviewedIds={reviewedIds}
               dim
             />
           </div>
@@ -102,11 +117,13 @@ function Section({
   title,
   empty,
   appts,
+  reviewedIds,
   dim = false,
 }: {
   title: string;
   empty: string;
   appts: AppointmentRow[];
+  reviewedIds: Set<string>;
   dim?: boolean;
 }) {
   return (
@@ -142,29 +159,28 @@ function Section({
                   with {a.practitioners?.name ?? "your clinician"}
                 </div>
               </div>
-              <div className="col-span-12 md:col-span-3 text-right">
+              <div className="col-span-12 md:col-span-3 flex flex-wrap gap-2 md:justify-end">
                 <StatusPill status={a.status} />
+                <PaymentPill status={a.payment_status} />
               </div>
+              {a.status === "completed" && (
+                <div className="col-span-12 flex md:justify-end">
+                  {reviewedIds.has(a.id) ? (
+                    <p className="text-xs text-muted-foreground">
+                      Feedback received — thank you.
+                    </p>
+                  ) : (
+                    <FeedbackForm
+                      appointmentId={a.id}
+                      serviceName={a.services?.name ?? undefined}
+                    />
+                  )}
+                </div>
+              )}
             </li>
           ))}
         </ul>
       )}
     </div>
-  );
-}
-
-function StatusPill({ status }: { status: Appointment["status"] }) {
-  const map: Record<Appointment["status"], { label: string; cls: string }> = {
-    pending: { label: "Awaiting confirmation", cls: "bg-[var(--brass)]/15 text-[var(--brass)]" },
-    confirmed: { label: "Confirmed", cls: "bg-[var(--primary)]/15 text-[var(--primary)]" },
-    completed: { label: "Completed", cls: "bg-muted text-muted-foreground" },
-    cancelled: { label: "Cancelled", cls: "bg-destructive/10 text-destructive" },
-    no_show: { label: "Missed", cls: "bg-destructive/10 text-destructive" },
-  };
-  const m = map[status];
-  return (
-    <span className={`inline-block text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full ${m.cls}`}>
-      {m.label}
-    </span>
   );
 }

@@ -45,6 +45,8 @@ export type AppointmentStatus =
   | "cancelled"
   | "no_show";
 
+export type PaymentStatus = "unpaid" | "paid" | "refunded";
+
 export type Appointment = {
   id: string;
   patient_id: string | null;
@@ -53,6 +55,7 @@ export type Appointment = {
   starts_at: string;
   ends_at: string;
   status: AppointmentStatus;
+  payment_status: PaymentStatus;
   patient_name: string;
   patient_email: string;
   patient_phone: string;
@@ -60,3 +63,17 @@ export type Appointment = {
   notes: string | null;
   created_at: string;
 };
+
+export type Feedback = {
+  id: string;
+  appointment_id: string | null;
+  patient_id: string | null;
+  patient_name: string | null;
+  patient_email: string | null;
+  rating: number;
+  comment: string | null;
+  is_public: boolean;
+  created_at: string;
+};
+
+export type UserRole = "customer" | "admin";
