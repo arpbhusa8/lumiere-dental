@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "om-sai-dental",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-03-25",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  }
+  // Free tier: Workers Free = 100k requests/day (this site ~100 users/day),
+  // unlimited static-asset requests. Commercial use is permitted on the free plan.
+  // Set secrets in the Cloudflare dashboard or via `wrangler secret put` — do NOT
+  // commit them here:
+  //   NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+  //   NEXT_PUBLIC_SITE_URL, NEXT_PUBLIC_SITE_NAME
+}
