@@ -8,7 +8,7 @@ import { WordStagger } from "@/components/motion/word-stagger";
 import { Button } from "@/components/ui/button";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const AJIT_PHOTO = "/team/dr-ajit-yadav.png";
+const AJIT_PHOTO = "/team/dr-ajit-yadav.webp";
 
 export function Hero() {
   const reduce = useReducedMotion();

@@ -1,10 +1,9 @@
 import { Reveal } from "@/components/motion/reveal";
-import type { Testimonial } from "@/lib/types";
 
 // proof-gap: testimonials
 // Do not fabricate quotes. Display a neutral placeholder until real,
 // consented patient testimonials are collected.
-export function TestimonialFeature({ testimonials: _testimonials }: { testimonials: Testimonial[] }) {
+export function TestimonialFeature() {
   return (
     <section className="py-28 md:py-40 bg-[var(--bone)]">
       <div className="container-editorial max-w-3xl">

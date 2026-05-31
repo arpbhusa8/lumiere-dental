@@ -61,7 +61,7 @@ export const TEAM: TeamMember[] = [
     title: "Lead Clinician — Periodontist & Implantologist",
     nmcNo: null,
     bio: "Dr. Ajit Yadav holds a Master of Dental Surgery in Periodontology and practises as a consultant periodontist and implantologist. Alongside chair-side care at Om Sai, he lectures at Nobel Medical College in Biratnagar — a teaching role that keeps his clinical protocols anchored in current evidence. His approach is patient-first and explanation-led: each consultation focuses on understanding the underlying condition, walking through the realistic options and agreeing a plan before treatment begins.",
-    photoFile: "dr-ajit-yadav.png",
+    photoFile: "dr-ajit-yadav.webp",
     linkedin: null, // proof-gap: confirmed LinkedIn URL not yet provided
     bookable: true,
     implantsPlaced: 100,
@@ -98,7 +98,7 @@ export const TEAM: TeamMember[] = [
     title: "Dental Surgeon",
     nmcNo: "43429",
     bio: "Dr. Priyesh Kamat is a dental surgeon at Om Sai Dental Implant Center. He holds a Bachelor of Dental Surgery (BDS) from the B.P. Koirala Institute of Health Sciences (BPKIHS) in Dharan and is registered with the Nepal Medical Council (NMC No. 43429).",
-    photoFile: "dr-priyesh-kamat.png",
+    photoFile: "dr-priyesh-kamat.webp",
     linkedin: null, // proof-gap: no confirmed LinkedIn profile found in research
     bookable: true,
   },
@@ -110,7 +110,7 @@ export const TEAM: TeamMember[] = [
     title: "Office Assistant",
     nmcNo: null,
     bio: "Renuka Rai holds a Bachelor of Education (B.Ed) and is the office assistant at Om Sai Dental Implant Center. She looks after front-desk coordination and helps patients with appointments and enquiries.",
-    photoFile: "renuka-rai.png",
+    photoFile: "renuka-rai.webp",
     linkedin: null, // proof-gap: confirmed LinkedIn URL not yet provided
     bookable: false,
   },
