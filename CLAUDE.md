@@ -33,6 +33,8 @@ There is no unit-test runner — only Playwright e2e. Quality gate = `pnpm lint 
 - `src/lib/supabase/server.ts` — RSC / server actions
 - `src/lib/supabase/middleware.ts` — edge middleware only
 
+Magic-link entry points: `/login` + `/signup` post via `signInWithOtp` (`src/components/auth/login-form.tsx`) → email link lands on `/auth/callback` (`exchangeCodeForSession`, redirects to `?next` or `/dashboard`) → `/auth/signout` clears it. `/dashboard` is the customer portal (server component; lists the signed-in user's own appointments).
+
 **Anon booking flow.** RLS blocks anon INSERT on `appointments`. The booking server action (`src/app/booking/actions.ts`) Zod-validates input, then calls `supabase.rpc("create_appointment", …)` — a `SECURITY DEFINER` RPC added in migration `003`. Never INSERT into `appointments` directly from client/server code — go through the RPC.
 
 **Supabase migrations are ordered and not idempotent.** Apply in numeric order:
@@ -44,7 +46,7 @@ There is no unit-test runner — only Playwright e2e. Quality gate = `pnpm lint 
 6. `006_profiles_and_roles.sql` — customer/admin roles foundation: `user_role` enum, `patient_profiles.role`, `is_admin()`, `handle_new_user()` signup trigger, `admin_set_role()` (self-escalation blocked — role only changes via this RPC)
 7. `007_appointments_admin_access.sql` — admin-wide RLS on `appointments` (sits alongside self policies via permissive-OR; needs `is_admin()` from 006)
 
-`004` overwrites seed data from `001` — applying out of order yields the wrong roster. **Customer portal (`/account`) + admin dashboard (`/admin`) extend the existing schema — they do NOT add a `profiles` table or `appointments.user_id` column; auth-linking reuses the `patient_id = auth.uid()` set by `create_appointment`.** Schema changes go in new numbered migrations; mirror every applied change in `supabase/migrations/`.
+`004` overwrites seed data from `001` — applying out of order yields the wrong roster. **The customer portal (`/dashboard`, built) + future admin dashboard extend the existing schema — they do NOT add a `profiles` table or `appointments.user_id` column; auth-linking reuses the `patient_id = auth.uid()` set by `create_appointment`.** `/dashboard` reads the signed-in user's own appointments (RLS self-policy); migration `007` adds admin-wide RLS for an admin UI that is not yet built. Schema changes go in new numbered migrations; mirror every applied change in `supabase/migrations/`.
 
 **Brand is Om Sai, not Lumière.** Repo name / Vercel project slug / migration `001` still say "Lumière" (placeholder from scaffold). Real client = **Om Sai Dental Implant Center**, Dharan, Nepal; lead = **Dr. Ajit Yadav, MDS**. Single source of truth for copy, banned words, and proof gaps: [`.brief/SOURCE.md`](./.brief/SOURCE.md) — consult before writing UI copy. Do **not** invent prices, credentials, testimonials, or equipment claims; current proof gaps are tracked in `STATE.md` and must be owner-confirmed before publish.
 
